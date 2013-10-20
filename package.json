@@ -1,0 +1,28 @@
+{
+  "name": "referit-node",
+  "version": "0.0.0",
+  "description": "A module for integrating with Referit.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./tests/tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:sidelab/referit-node.git"
+  },
+  "keywords": [
+    "refer",
+    "it",
+    "referit",
+    "referal",
+    "system",
+    "program",
+    "commision",
+    "kickbacks"
+  ],
+  "author": "Maurice Butler <maurice.butler@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MauriceButler/referit-node/issues"
+  }
+}
