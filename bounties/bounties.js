@@ -1,18 +1,18 @@
 var config = require('../config'),
     defaultCallback = function (){},
-    agentUrl = config.url + 'agents';
+    bountyUrl = config.url + 'bounties';
 
 module.exports = function(request){
     return {
-        get: function(agentId, callback){
-            if(typeof agentId === 'function'){
-                callback = agentId;
-                agentId = null;
+        get: function(bountyId, callback){
+            if(typeof bountyId === 'function'){
+                callback = bountyId;
+                bountyId = null;
             }
 
-            var url = agentUrl;
-            if(typeof agentId === 'string'){
-                url += '/' + agentId;
+            var url = bountyUrl;
+            if(typeof bountyId === 'string'){
+                url += '/' + bountyId;
             }
 
             if(!callback){
@@ -30,10 +30,10 @@ module.exports = function(request){
                 callback = defaultCallback;
             }
 
-            request({url: agentUrl, method: 'POST', json: agent}, callback);
+            request({url: bountyUrl, method: 'POST', json: agent}, callback);
         },
-        delete: function(agentId, callback){
-            if(!agentId){
+        delete: function(bountyId, callback){
+            if(!bountyId){
                 return callback(new Error('Agent id is required.'));
             }
 
@@ -41,7 +41,7 @@ module.exports = function(request){
                 callback = defaultCallback;
             }
 
-            request({url: agentUrl + '/' + agentId, method: 'DELETE'}, callback);
+            request({url: bountyUrl + '/' + bountyId, method: 'DELETE'}, callback);
         }
     };
 };

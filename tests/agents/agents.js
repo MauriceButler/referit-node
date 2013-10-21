@@ -24,7 +24,7 @@ test('agents Exists', function (t) {
 test('agents.get defaults to all', function (t) {
     t.plan(2);
     var agents = getCleanTestObject(function(url, callback){
-        t.equals(url, testConfig.url + 'agent', 'recieved correct url');
+        t.equals(url, testConfig.url + 'agents', 'recieved correct url');
         t.equals(callback.toString(), 'function (){}', 'recieved default callback');
     });
 
@@ -35,7 +35,7 @@ test('agents.get uses provided values', function (t) {
     t.plan(2);
     var testId = '123abc';
     var agents = getCleanTestObject(function(url, callback){
-        t.equals(url, testConfig.url + 'agent/' + testId, 'recieved correct url');
+        t.equals(url, testConfig.url + 'agents/' + testId, 'recieved correct url');
         callback();
     });
 
@@ -58,7 +58,7 @@ test('agents.create agent is created default callback', function (t) {
     t.plan(4);
     var testAgent = {foo: 'bar'};
     var agents = getCleanTestObject(function(options, callback){
-        t.equals(options.url, testConfig.url + 'agent', 'recieved correct url');
+        t.equals(options.url, testConfig.url + 'agents', 'recieved correct url');
         t.equals(options.method, 'POST', 'is a POST request');
         t.equals(options.json, testAgent, 'recieved correct agent data');
         t.equals(callback.toString(), 'function (){}', 'recieved default callback');
@@ -71,7 +71,7 @@ test('agents.create agent is created callback used', function (t) {
     t.plan(2);
     var testAgent = {foo: 'bar'};
     var agents = getCleanTestObject(function(options, callback){
-        t.equals(options.url, testConfig.url + 'agent', 'recieved correct url');
+        t.equals(options.url, testConfig.url + 'agents', 'recieved correct url');
         callback();
     });
 
@@ -94,7 +94,7 @@ test('agents.delete sends correct data', function (t) {
     t.plan(2);
     var testAgentId = 123456;
     var agents = getCleanTestObject(function(options, callback){
-        t.equals(options.url, testConfig.url + 'agent/' + testAgentId, 'recieved correct url');
+        t.equals(options.url, testConfig.url + 'agents/' + testAgentId, 'recieved correct url');
         t.equals(options.method, 'DELETE', 'is a DELETE request');
     });
 
