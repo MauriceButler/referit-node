@@ -8,7 +8,8 @@ module.exports = function(apiKey){
     });
 
     return {
-        agents: require('./agents/agents')(request)
+        agents: require('./agents/agents')(request),
+        bounties: require('./bounties/bounties')(request)
     };
 };
 
