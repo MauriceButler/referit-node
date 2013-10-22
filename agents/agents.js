@@ -2,7 +2,7 @@ var config = require('../config'),
     defaultCallback = function (){},
     agentUrl = config.url + 'agents';
 
-module.exports = function(request){
+module.exports = function(request, wrapCallback){
     return {
         get: function(agentId, callback){
             if(typeof agentId === 'function'){
@@ -15,11 +15,7 @@ module.exports = function(request){
                 url += '/' + agentId;
             }
 
-            if(!callback){
-                callback = defaultCallback;
-            }
-
-            request(url, callback);
+            request(url, callback ? wrapCallback(callback) : defaultCallback);
         },
         create: function(agent, callback){
             if(!agent){
@@ -30,7 +26,7 @@ module.exports = function(request){
                 callback = defaultCallback;
             }
 
-            request({url: agentUrl, method: 'POST', json: agent}, callback);
+            request({url: agentUrl, method: 'POST', json: agent}, callback ? wrapCallback(callback) : defaultCallback);
         },
         delete: function(agentId, callback){
             if(!agentId){
@@ -41,7 +37,7 @@ module.exports = function(request){
                 callback = defaultCallback;
             }
 
-            request({url: agentUrl + '/' + agentId, method: 'DELETE'}, callback);
+            request({url: agentUrl + '/' + agentId, method: 'DELETE'}, callback ? wrapCallback(callback) : defaultCallback);
         }
     };
 };
