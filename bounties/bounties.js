@@ -2,7 +2,7 @@ var config = require('../config'),
     defaultCallback = function (){},
     bountyUrl = config.url + 'bounties';
 
-module.exports = function(request){
+module.exports = function(request, wrapCallback){
     return {
         get: function(bountyId, callback){
             if(typeof bountyId === 'function'){
@@ -15,33 +15,21 @@ module.exports = function(request){
                 url += '/' + bountyId;
             }
 
-            if(!callback){
-                callback = defaultCallback;
-            }
-
-            request(url, callback);
+            request(url, callback ? wrapCallback(callback) : defaultCallback);
         },
         create: function(agent, callback){
             if(!agent){
                 return callback(new Error('Agent data is required.'));
             }
 
-            if(!callback){
-                callback = defaultCallback;
-            }
-
-            request({url: bountyUrl, method: 'POST', json: agent}, callback);
+            request({url: bountyUrl, method: 'POST', json: agent}, callback ? wrapCallback(callback) : defaultCallback);
         },
         delete: function(bountyId, callback){
             if(!bountyId){
                 return callback(new Error('Agent id is required.'));
             }
 
-            if(!callback){
-                callback = defaultCallback;
-            }
-
-            request({url: bountyUrl + '/' + bountyId, method: 'DELETE'}, callback);
+            request({url: bountyUrl + '/' + bountyId, method: 'DELETE'}, callback ? wrapCallback(callback) : defaultCallback);
         }
     };
 };

@@ -2,6 +2,9 @@ var test = require('tape'),
     mockery = require('mockery'),
     testConfig = {
         url: 'http://test.com/'
+    },
+    wrapCallback = function(callback){
+        return callback;
     };
 
 mockery.registerAllowables(['../../agents/agents']);
@@ -9,7 +12,7 @@ mockery.registerMock('../config', testConfig);
 
 function getCleanTestObject(request){
     mockery.enable({ useCleanCache: true, warnOnReplace: false });
-    var agents = require('../../agents/agents')(request);
+    var agents = require('../../agents/agents')(request, wrapCallback);
     mockery.disable();
     return agents;
 }
@@ -36,7 +39,7 @@ test('agents.get uses provided values', function (t) {
     var testId = '123abc';
     var agents = getCleanTestObject(function(url, callback){
         t.equals(url, testConfig.url + 'agents/' + testId, 'recieved correct url');
-        callback();
+        callback(null, {});
     });
 
     agents.get(testId, function(){
@@ -72,7 +75,7 @@ test('agents.create agent is created callback used', function (t) {
     var testAgent = {foo: 'bar'};
     var agents = getCleanTestObject(function(options, callback){
         t.equals(options.url, testConfig.url + 'agents', 'recieved correct url');
-        callback();
+        callback(null, {});
     });
 
     agents.create(testAgent, function(){

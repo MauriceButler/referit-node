@@ -2,6 +2,9 @@ var test = require('tape'),
     mockery = require('mockery'),
     testConfig = {
         url: 'http://test.com/'
+    },
+    wrapCallback = function(callback){
+        return callback;
     };
 
 mockery.registerAllowables(['../../bounties/bounties']);
@@ -9,7 +12,7 @@ mockery.registerMock('../config', testConfig);
 
 function getCleanTestObject(request){
     mockery.enable({ useCleanCache: true, warnOnReplace: false });
-    var bounties = require('../../bounties/bounties')(request);
+    var bounties = require('../../bounties/bounties')(request, wrapCallback);
     mockery.disable();
     return bounties;
 }
