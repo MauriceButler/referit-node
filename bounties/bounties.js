@@ -26,10 +26,24 @@ module.exports = function(request, wrapCallback){
         },
         delete: function(bountyId, callback){
             if(!bountyId){
-                return callback(new Error('Agent id is required.'));
+                return callback(new Error('Bounty id is required.'));
             }
 
             request({url: bountyUrl + '/' + bountyId, method: 'DELETE'}, callback ? wrapCallback(callback) : defaultCallback);
+        },
+        assign: function(bountyId, agentId, callback){
+            if(!bountyId){
+                return callback(new Error('Bounty id is required.'));
+            }
+
+            if(!agentId){
+                return callback(new Error('Account id is required.'));
+            }
+
+            request({url: bountyUrl + '/assign', method: 'POST', json: {
+                bountyId: bountyId,
+                agentId: agentId
+            }}, callback ? wrapCallback(callback) : defaultCallback);
         }
     };
 };

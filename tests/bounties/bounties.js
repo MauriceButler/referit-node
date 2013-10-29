@@ -83,13 +83,13 @@ test('bounties.create agent is created callback used', function (t) {
     });
 });
 
-test('bounties.delete agentId is required', function (t) {
+test('bounties.delete bountyId is required', function (t) {
     t.plan(1);
     var testAgentId = null;
     var bounties = getCleanTestObject();
 
     bounties.delete(testAgentId, function(error){
-        t.equal(error.message, 'Agent id is required.', 'correctly errored');
+        t.equal(error.message, 'Bounty id is required.', 'correctly errored');
     });
 });
 
@@ -112,4 +112,40 @@ test('bounties.delete uses default callback', function (t) {
     });
 
     bounties.delete(testAgentId);
+});
+
+test('bounties.assign bounty is assigned', function (t) {
+    t.plan(2);
+    var testAgentId = 123456;
+    var testBountyId = 123456;
+    var bounties = getCleanTestObject(function(options, callback){
+        t.equals(options.url, testConfig.url + 'bounties/assign', 'recieved correct url');
+        t.equals(options.method, 'POST', 'is a POST request');
+    });
+
+    bounties.assign(testBountyId, testAgentId, function(error){
+        t.pass('callback used');
+    });
+});
+
+test('bounties.assign bountyId is required', function (t) {
+    t.plan(1);
+    var testBountyId = null;
+    var testAgentId = null;
+    var bounties = getCleanTestObject();
+
+    bounties.assign(testBountyId, testAgentId, function(error){
+        t.equal(error.message, 'Bounty id is required.', 'correctly errored');
+    });
+});
+
+test('bounties.assign bountyId is required', function (t) {
+    t.plan(1);
+    var testBountyId = null;
+    var testAgentId = null;
+    var bounties = getCleanTestObject();
+
+    bounties.assign(testBountyId, testAgentId, function(error){
+        t.equal(error.message, 'Bounty id is required.', 'correctly errored');
+    });
 });
