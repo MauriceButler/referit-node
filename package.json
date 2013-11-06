@@ -26,7 +26,7 @@
     "url": "https://github.com/MauriceButler/referit-node/issues"
   },
   "devDependencies": {
-    "tape": "1.0.x",
+    "tape": "2.1.x",
     "mockery": "1.4.x"
   },
   "dependencies": {
