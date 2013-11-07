@@ -9,12 +9,11 @@ module.exports = function(apiKey){
 
     function wrapCallback(callback){
         return function (error, response, data){
-            var jsonData = data && JSON.parse(data);
             if(error || response.statusCode >= 400){
-                return callback(error || jsonData.errors);
+                return callback(error || data.errors);
             }
 
-            callback(null, jsonData);
+            callback(null, data);
         };
     }
 
