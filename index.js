@@ -19,7 +19,8 @@ module.exports = function(apiKey){
 
     return {
         agents: require('./agents/agents')(request, wrapCallback),
-        bounties: require('./bounties/bounties')(request, wrapCallback)
+        bounties: require('./bounties/bounties')(request, wrapCallback),
+        referals: require('./referals/referals')(request, wrapCallback),
     };
 };
 
