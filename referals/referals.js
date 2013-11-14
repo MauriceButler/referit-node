@@ -11,7 +11,7 @@ module.exports = function(request, wrapCallback){
 
             var url = referalUrl + '/' + transmissionId;
 
-            request(url, callback ? wrapCallback(callback) : defaultCallback);
+            request({url: url, method: 'POST', json: {transmissionId: transmissionId}}, callback ? wrapCallback(callback) : defaultCallback);
         }
     };
 };

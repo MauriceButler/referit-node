@@ -31,7 +31,7 @@ test('referals Exists', function (t) {
     t.equals(typeof referals, 'object',  'referals is an object');
 });
 
-test('referals Exists', function (t) {
+test('referals.confirm Exists', function (t) {
     t.plan(2);
     var referals = getCleanTestObject();
     t.ok(referals.confirm, 'referals.confirm Exists');
@@ -39,18 +39,32 @@ test('referals Exists', function (t) {
 });
 
 test('transmissionId is required', function (t){
-
+    t.plan(2);
+    var referals = getCleanTestObject();
+    referals.confirm(null, function(error){
+        t.ok(error, 'error recieved');
+        t.equals(error.message, 'Transmission Id is required.', 'correct error message');
+    });
 });
 
-// test('agents.create agent is created default callback', function (t) {
-//     t.plan(4);
-//     var testAgent = {foo: 'bar'};
-//     var agents = getCleanTestObject(function(options, callback){
-//         t.equals(options.url, testConfig.url + 'agents', 'recieved correct url');
-//         t.equals(options.method, 'POST', 'is a POST request');
-//         t.equals(options.json, testAgent, 'recieved correct agent data');
-//         t.equals(callback.toString(), 'function (){}', 'recieved default callback');
-//     });
+test('referals.confirm uses default callback', function (t) {
+    t.plan(1);
+    var referals = getCleanTestObject(function(options, callback){
+        t.equals(callback.toString(), 'function (){}', 'recieved default callback');
+    });
 
-//     agents.create(testAgent);
-// });
+    referals.confirm('sadas');
+});
+
+test('referals.confirm send correct request', function (t) {
+    t.plan(3);
+
+    var transmissionId = '1234';
+        referals = getCleanTestObject(function(options, callback){
+        t.equals(options.url, testConfig.url + 'referals/'+ transmissionId, 'recieved correct url');
+        t.equals(options.method, 'POST', 'is a POST request');
+        t.equals(options.json.transmissionId, transmissionId, 'recieved correct transmissionId');
+    });
+
+    referals.confirm(transmissionId);
+});
