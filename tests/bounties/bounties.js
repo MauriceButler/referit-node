@@ -1,5 +1,6 @@
 var test = require('tape'),
     mockery = require('mockery'),
+    pathToObjectUnderTest = '../../bounties/bounties',
     testConfig = {
         url: 'http://test.com/'
     },
@@ -7,15 +8,22 @@ var test = require('tape'),
         return callback;
     };
 
-mockery.registerAllowables(['../../bounties/bounties']);
-mockery.registerMock('../config', testConfig);
+mockery.registerAllowables([pathToObjectUnderTest]);
+
+function resetMocks(){
+    mockery.registerMock('../config', testConfig);
+}
 
 function getCleanTestObject(request){
     mockery.enable({ useCleanCache: true, warnOnReplace: false });
-    var bounties = require('../../bounties/bounties')(request, wrapCallback);
+    var objectUnderTest = require(pathToObjectUnderTest)(request, wrapCallback);
     mockery.disable();
-    return bounties;
+    resetMocks();
+    return objectUnderTest;
 }
+
+resetMocks();
+
 
 test('bounties Exists', function (t) {
     t.plan(2);
