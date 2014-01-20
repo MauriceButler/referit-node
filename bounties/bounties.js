@@ -17,12 +17,12 @@ module.exports = function(request, wrapCallback){
 
             request(url, callback ? wrapCallback(callback) : defaultCallback);
         },
-        create: function(agent, callback){
-            if(!agent){
-                return callback(new Error('Agent data is required.'));
+        create: function(bounty, callback){
+            if(!bounty){
+                return callback(new Error('Bounty data is required.'));
             }
 
-            request({url: bountyUrl, method: 'POST', json: agent}, callback ? wrapCallback(callback) : defaultCallback);
+            request({url: bountyUrl, method: 'POST', json: bounty}, callback ? wrapCallback(callback) : defaultCallback);
         },
         delete: function(bountyId, callback){
             if(!bountyId){
@@ -41,6 +41,16 @@ module.exports = function(request, wrapCallback){
             }
 
             request({url: bountyUrl + '/assign', method: 'POST', json: {
+                bountyId: bountyId,
+                agentId: agentId
+            }}, callback ? wrapCallback(callback) : defaultCallback);
+        },
+        unassign: function(bountyId, agentId, callback){
+            if(!bountyId){
+                return callback(new Error('Active bounty id is required.'));
+            }
+
+            request({url: bountyUrl + '/unassign', method: 'POST', json: {
                 bountyId: bountyId,
                 agentId: agentId
             }}, callback ? wrapCallback(callback) : defaultCallback);
